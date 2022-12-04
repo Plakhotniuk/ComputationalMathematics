@@ -14,7 +14,7 @@ namespace Slae::Solvers{
                                             const double tolerance = 1.e-10){
         double alpha =  (y_f - y_0) / (x_f - x_0);
 
-        alpha = solverNewtonMethod(alpha, h, );
+//        alpha = solverNewtonMethod(alpha, h, );
     };
 }
 
