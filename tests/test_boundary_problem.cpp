@@ -2,13 +2,13 @@
 // Created by Арсений Плахотнюк on 04.12.2022.
 //
 #include "gtest/gtest.h"
-#include "differential_equations/matrix/LinearBoundaryValueProblemMatrix3.hpp"
-#include "differential_equations/utility/Overloads.hpp"
-#include "differential_equations/interpolation/Linear.hpp"
+#include "comp_math/matrix/LinearBoundaryValueProblemMatrix3.hpp"
+#include "comp_math/utility/Overloads.hpp"
+#include "comp_math/interpolation/Linear.hpp"
 #include <iostream>
 #include "functional"
 #include <cmath>
-#include <fstream>
+// Задача 3
 
 
 TEST(LINEARBOUNDARYVALUEPROBLEM1, TEST1) {

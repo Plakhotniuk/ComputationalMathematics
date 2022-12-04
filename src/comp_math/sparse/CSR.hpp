@@ -8,7 +8,7 @@
 #include <vector>
 #include <iosfwd>
 #include <set>
-#include "differential_equations/utility/Triplet.hpp"
+#include "comp_math/utility/Triplet.hpp"
 
 template<typename T>
 class CSR {

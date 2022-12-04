@@ -4,14 +4,14 @@
 
 #ifndef MY_PROJECT_LINEARBOUNDARYVALUEPROBLEMMATRIX3_HPP
 #define MY_PROJECT_LINEARBOUNDARYVALUEPROBLEMMATRIX3_HPP
-#include "differential_equations/utility/Overloads.hpp"
-#include "differential_equations/sparse/CSR.hpp"
+#include "comp_math/utility/Overloads.hpp"
+#include "comp_math/sparse/CSR.hpp"
 #include <sstream>
-#include "differential_equations/Exceptions/SlaeBaseException.hpp"
+#include "comp_math/Exceptions/SlaeBaseException.hpp"
 #include <functional>
 #include "ThreeDiagonalMatrix.hpp"
 #include "cmath"
-#include "differential_equations/solvers/ThreeDiadonalSolver.hpp"
+#include "comp_math/solvers/ThreeDiadonalSolver.hpp"
 #include "ostream"
 
 enum COLUMNINDEX {

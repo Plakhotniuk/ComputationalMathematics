@@ -2,7 +2,7 @@
 // Created by Арсений Плахотнюк on 27.09.2022.
 //
 #include "gtest/gtest.h"
-#include "compmath/solvers/ThreeDiadonalSolver.hpp"
+#include "comp_math/solvers/ThreeDiadonalSolver.hpp"
 #include <iostream>
 #include "functional"
 #include <fstream>

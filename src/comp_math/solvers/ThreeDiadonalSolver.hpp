@@ -5,8 +5,8 @@
 #ifndef MY_PROJECT_THREEDIADONALSOLVER_HPP
 #define MY_PROJECT_THREEDIADONALSOLVER_HPP
 
-#include "differential_equations/matrix/ThreeDiagonalMatrix.hpp"
-#include "differential_equations/Exceptions/SlaeBaseException.hpp"
+#include "comp_math/matrix/ThreeDiagonalMatrix.hpp"
+#include "comp_math/Exceptions/SlaeBaseException.hpp"
 #include <sstream>
 #include <vector>
 
