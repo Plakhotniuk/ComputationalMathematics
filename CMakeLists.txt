@@ -5,6 +5,8 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_subdirectory(src)
 
+add_subdirectory(third-party)
+
 message("TESTING: ${WITH_TESTS}")
 
 if (WITH_TESTS)

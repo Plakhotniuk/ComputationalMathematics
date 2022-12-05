@@ -4,8 +4,6 @@
 
 #ifndef COMPUTATIONALMATHEMATICS_DORMANDPRINCE_HPP
 #define COMPUTATIONALMATHEMATICS_DORMANDPRINCE_HPP
-#include "comp_math/Exceptions/SlaeBaseException.hpp"
-#include "comp_math/utility/Norm.hpp"
 #include <vector>
 #include <cmath>
 
