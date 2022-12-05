@@ -6,8 +6,8 @@
 #include "comp_math/utility/Overloads.hpp"
 #include "comp_math/interpolation/Linear.hpp"
 #include <iostream>
-#include "functional"
 #include <cmath>
+#include <fstream>
 // Задача 3
 
 
@@ -25,7 +25,8 @@ TEST(LINEARBOUNDARYVALUEPROBLEM1, TEST1) {
     double left_bound_y = 0.;
     double right_bound_y = M_PI*M_PI;
 
-    int max_number_of_splits = 1000;
+    int max_number_of_splits = 100;
+
     std::vector<double> x(max_number_of_splits + 1);
     double h = (right_bound_x - left_bound_x)/max_number_of_splits;
     for(int i = 0; i < x.size(); ++i){
@@ -41,8 +42,25 @@ TEST(LINEARBOUNDARYVALUEPROBLEM1, TEST1) {
     std::vector<double> solution = Slae::Solvers::solveThreeDiagonal(matrix.first, matrix.second);
 
 
-    std::vector<double> answer_x = {0.5, 1, 1.5, 2, 2.5, 3};
+    std::vector<double> answer_x = {0.5, 1, 1.5, 2, 2.5};
     for(double i : answer_x){
         std::cout<< linear_interpolation(x, solution, i) << std::endl;
     }
+
+    std::fstream file;
+    file.open("test_boundary_problem.txt", std::fstream::out);
+
+    for(double i : solution){
+        file<< i<< " ";
+
+    }
+    file<<"\n";
+
+    for(double i : x){
+        file<< i<< " ";
+
+    }
+    file<<"\n";
+    file.close();
+
 }

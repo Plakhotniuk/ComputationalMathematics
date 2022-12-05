@@ -37,7 +37,7 @@ TEST(SIMPLEINTEGRATE, SIMPLERK4){
     std::function<double(double, double)> f = [](double x, double p){ return 1000*(1. - p*p)*p - x; };
     double t_0 = 0.;
     double t_f = 1000.;
-    const int n = 1000000;
+    const int n = 5000000;
     const double p_0 = 0.001;
     const double x_0 = 0.;
 
