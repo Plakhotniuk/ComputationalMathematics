@@ -6,15 +6,16 @@
 #define COMPUTATIONALMATHEMATICS_DORMANDPRINCE_HPP
 #include <vector>
 #include <cmath>
+#include "comp_math//types/BasicTypes.hpp"
 
-std::pair<std::vector<double>, std::vector<double>> DormandPrince(std::function<double(double, double)>& f,
-                                                                  const double x_0, const double x_f, const double y_0,
-                                                                  double h, const double tolerance = 1.e-10){
-    double k1, k2, k3, k4, k5, k6, k7;
-    std::vector<double> y = {y_0};
+std::pair<std::vector<double>, std::vector<VectorXd>> DormandPrince(std::function<VectorXd(double, const VectorXd&)>& f,
+                                                                  const double x_0, const double x_f, const VectorXd& y_0,
+                                                                  double h, const double tolerance = 1.e-3){
+    VectorXd k1, k2, k3, k4, k5, k6, k7;
+    std::vector<VectorXd> y = {y_0};
     std::vector<double> x = {x_0};
-    double y1; // O(h^4) approximation
-    double y2; // O(h^5) approximation
+    VectorXd y1; // O(h^4) approximation
+    VectorXd y2; // O(h^5) approximation
     double s;
     int num_of_steps = 0;
     double x_n = x_0;
@@ -29,7 +30,7 @@ std::pair<std::vector<double>, std::vector<double>> DormandPrince(std::function<
         k7 = f(x_n + h*1, y[num_of_steps] + h * (k1 * 35 / 384 + k2 * 0 + k3 * 500 / 113 + k4 * 125 / 192 + k5 * (-2187. / 6784) + k6 * 11 / 84));
         y1 = y[num_of_steps] + h * (k1 * 5179. / 57600. + k2 * 0 + k3 * 7571. / 16695. + k4 * 393. / 640. + k5 * (-92097. / 339200) + k6 * 187 / 2100 + k7 * 1 / 40);
         y2 = y[num_of_steps] + h * (k1 * 35. / 384. + k2 * 0 + k3 * 500. / 1113. + k4 * 125. / 192. + k5 * (-2187. / 6784) + k6 * 11 / 84 + k7 * 0);
-        s = pow(h*tolerance / (2*(x_f - x_0)*std::fabs(y1 - y2)), 0.25);
+        s = pow(h*tolerance / (2*(x_f - x_0)*(y1 - y2).squaredNorm()), 0.25);
 
         if (s >= 2){
             y.push_back(y1);
@@ -49,6 +50,7 @@ std::pair<std::vector<double>, std::vector<double>> DormandPrince(std::function<
         else if (s < 1){
             h /= 2;
         }
+        std::cout<<num_of_steps<<" - "<< x_n <<std::endl;
     }
     return {x, y};
 }
