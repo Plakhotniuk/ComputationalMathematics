@@ -20,7 +20,7 @@ TEST(THREEBODIES, SOLVEDP7){
         double y = y_(2);
         double nu = y_(3);
         double A = pow((x + mu)*(x + mu) + y*y, 1.5);
-        double B = pow((x - eta)*(x + mu) + y*y, 1.5);
+        double B = pow((x - eta)*(x - eta) + y*y, 1.5);
         res << u,
         x + 2*nu - eta*((x + mu) / A) - mu*((x - eta) / B),
         nu,
@@ -28,10 +28,10 @@ TEST(THREEBODIES, SOLVEDP7){
 
         return res;
     };
-    double tolerance = 1.e-3;
+    double tolerance = 1.e-10;
     double T = 17.0652165601579625588917206249;
     double t_0 = 0.;
-    double t_f = 100*T;
+    double t_f = 5*T;
     const int n = 100000;
     double h = (t_f - t_0)/n;
     VectorXd u_0(4);
@@ -43,14 +43,14 @@ TEST(THREEBODIES, SOLVEDP7){
     file.open("test_three_bodies_dp7.txt", std::fstream::out);
 
 
-    for(int i = 0; i < answer.first.size(); ++i){
+    for(int i = 0; i < answer.first.size(); i+=100){
     // x
     file<< answer.second[i](0)<< " ";
 
     }
     file<<"\n";
 
-    for(int i = 0; i < answer.first.size(); ++i){
+    for(int i = 0; i < answer.first.size(); i+=100){
     // y
     file<< answer.second[i](2)<< " ";
 
