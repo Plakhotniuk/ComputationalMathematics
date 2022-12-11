@@ -72,14 +72,13 @@ TEST(RAYLEIGH2, RK4V){
     file.open("test_rayleigh_rk.txt", std::fstream::out);
 
     for(int i = 0; i < answer.size(); i+=1000){
-        file<< answer[i](0)<< " ";
-
+        file<< answer[i](0)<< " "; // y
     }
     file<<"\n";
 
     for(int i = 0; i < answer.size(); i+=1000){
 
-        file << t_0 + h * i << " ";
+        file << t_0 + h * i << " "; // x
     }
     file<<"\n";
     file.close();
@@ -92,7 +91,7 @@ TEST(RAYLEIGH3, DP7){
     // y_ = [y, y']
     std::function<VectorXd(double, const VectorXd&)> f = [](double x, const VectorXd& y_){
         VectorXd res(2);
-        res << y_[1], 1000*(1. - y_[1]*y_[1])*y_[1] - x;
+        res << y_(1), 100*(1. - y_[1]*y_[1])*y_[1] - x;
         return res;
     };
     double t_0 = 0.;
@@ -107,16 +106,60 @@ TEST(RAYLEIGH3, DP7){
     std::fstream file;
     file.open("test_rayleigh_dp.txt", std::fstream::out);
 
-    for(int i = 0; i < answer.first.size(); i+=1000){
+    for(int i = 0; i < answer.first.size(); ++i){
         file<< answer.second[i](0)<< " ";
 
     }
     file<<"\n";
 
-    for(int i = 0; i < answer.first.size(); i+=1000){
+    for(int i = 0; i < answer.first.size(); ++i){
         file << answer.first[i] << " ";
     }
     file<<"\n";
+    file.close();
+
+}
+
+TEST(SIMPLESAMPLE, DP7){
+    // X.9.3
+    // y_ = [y, y']
+    std::function<VectorXd(double, const VectorXd&)> f = [](double x, const VectorXd& y_){
+        VectorXd res(2);
+        res << y_[1], cos(3*x) - 4*y_[0];
+        return res;
+    };
+    double t_0 = 0.;
+    double t_f = 8.;
+    const int n = 1000;
+    double h = (t_f - t_0)/n;
+    VectorXd u_0(2);
+    u_0 << 0.8, 2.;
+
+    std::pair<std::vector<double>, std::vector<VectorXd>> answer = DormandPrince(f, t_0, t_f, u_0, h);
+
+    std::fstream file;
+    file.open("test_simple_sample_dp.txt", std::fstream::out);
+
+    for(int i = 0; i < answer.first.size(); ++i){
+        // x
+        file << answer.first[i] << " ";
+    }
+    file<<"\n";
+
+    for(int i = 0; i < answer.first.size(); ++i){
+        // y
+        file<< answer.second[i](0)<< " ";
+
+    }
+    file<<"\n";
+
+    for(int i = 0; i < answer.first.size(); ++i){
+        // y'
+        file<< answer.second[i](1)<< " ";
+
+    }
+    file<<"\n";
+
     file.close();
 
 }
