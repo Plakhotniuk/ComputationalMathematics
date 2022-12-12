@@ -2,9 +2,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 plt.figure()
 
-data = np.loadtxt(f'/Users/arseniy/Desktop/CompMath/ComputationalMathematics/cmake-build-debug/tests/test_nonlin_shooting_method.txt')
+data = np.loadtxt(f'/Users/arseniy/Desktop/CompMath/ComputationalMathematics/cmake-build-debug/tests/test_nonlin_bvp.txt')
+data2 = np.loadtxt(f'/Users/arseniy/Desktop/CompMath/ComputationalMathematics/cmake-build-debug/tests/test_nonlin_shooting_method.txt')
 
-plt.scatter(data[0, :], data[1, :], label=f'Численное решение методом стрельбы,\nКоличество узлов {data.shape[1]}', s=0.1)
+plt.plot(data[1, :], data[0, :], label=f'Численное решение методом квазилинеаризации,\nКоличество узлов {data.shape[1]}', color="red")
+plt.scatter(data[1, :], data[0, :], label=f'Численное решение методом методом стрельб,\nКоличество узлов {data2.shape[1]}', s=3)
 
 plt.legend()
 plt.title('Метод стрельбы')

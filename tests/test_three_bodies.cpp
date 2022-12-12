@@ -28,7 +28,7 @@ TEST(THREEBODIES, SOLVEDP7){
 
         return res;
     };
-    double tolerance = 1.e-10;
+    double tolerance = 1.e-12;
     double T = 17.0652165601579625588917206249;
     double t_0 = 0.;
     double t_f = 5*T;
@@ -56,6 +56,7 @@ TEST(THREEBODIES, SOLVEDP7){
 
     }
     file<<"\n";
+
 
     file.close();
 
