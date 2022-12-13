@@ -42,7 +42,7 @@ TEST(LINEARBOUNDARYVALUEPROBLEM1, TEST1) {
     std::vector<double> solution = Slae::Solvers::solveThreeDiagonal(matrix.first, matrix.second);
 
 
-    std::vector<double> answer_x = {0.5, 1, 1.5, 2, 2.5};
+    std::vector<double> answer_x = {0.5, 1, 1.5, 2, 2.5, 3};
     for(double i : answer_x){
         std::cout<< linear_interpolation(x, solution, i) << std::endl;
     }

@@ -91,7 +91,7 @@ TEST(RAYLEIGH3, DP7){
     // y_ = [y, y']
     std::function<VectorXd(double, const VectorXd&)> f = [](double x, const VectorXd& y_){
         VectorXd res(2);
-        res << y_(1), 100*(1. - y_[1]*y_[1])*y_[1] - x;
+        res << y_(1), 1000*(1. - y_[1]*y_[1])*y_[1] - x;
         return res;
     };
     double t_0 = 0.;
@@ -101,7 +101,7 @@ TEST(RAYLEIGH3, DP7){
     VectorXd u_0(2);
     u_0 << 0., 0.001;
 
-    std::pair<std::vector<double>, std::vector<VectorXd>> answer = DormandPrince(f, t_0, t_f, u_0, h);
+    std::pair<std::vector<double>, std::vector<VectorXd>> answer = DormandPrince(f, t_0, t_f, u_0, h, 1.e-5);
 
     std::fstream file;
     file.open("test_rayleigh_dp.txt", std::fstream::out);
@@ -121,7 +121,6 @@ TEST(RAYLEIGH3, DP7){
 }
 
 TEST(SIMPLESAMPLE, DP7){
-    // X.9.3
     // y_ = [y, y']
     std::function<VectorXd(double, const VectorXd&)> f = [](double x, const VectorXd& y_){
         VectorXd res(2);

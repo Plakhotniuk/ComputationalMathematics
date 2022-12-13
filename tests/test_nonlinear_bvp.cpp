@@ -5,6 +5,7 @@
 #include "comp_math/types/BasicTypes.hpp"
 #include "comp_math/solvers/ShootingMethod.hpp"
 #include "comp_math/matrix/NonLinearBoundaryValueProblemMatrix3.hpp"
+#include "comp_math/interpolation/Linear.hpp"
 #include <iostream>
 #include <fstream>
 
@@ -24,7 +25,22 @@ TEST(SHOOTING4, METHOD4){
     double y_f = 2.* exp(1)*exp(1);
     double tolerance = 1.e-10;
     double h = (x_f - x_0) / num_of_steps;
+    std::vector<double> x(num_of_steps + 1);
+    for(int i = 0; i < x.size(); ++i){
+        x[i] = x_0 + h * i;
+    }
+
     std::vector<VectorXd> answer = Slae::Solvers::solveShootingMethod(f, num_of_steps, x_0, x_f, y_0, y_f, tolerance);
+//    std::vector<double> solution(answer.size());
+//    for(int i = 0; i < answer.size(); ++i){
+//        solution[i] = answer[i](0);
+//    }
+//
+//    std::vector<double> answer_x = {3.5, 4, 4.5, 5, 5.5};
+//    for(double i : answer_x){
+//        std::cout<< linear_interpolation(x, solution, i) << std::endl;
+//    }
+
     std::fstream file;
     file.open("test_nonlin_shooting_method.txt", std::fstream::out);
 
