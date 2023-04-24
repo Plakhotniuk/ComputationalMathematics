@@ -38,18 +38,19 @@ double getCoefD(double phi, double rho0, double cf, double p, double tau){
 
 
 
-
-
 TEST(PLANEPARALLELFIKTERING, TASK3){
     double Tmax = 10 * 24 * 60 * 60; // время расчета в секундах
+    double Tstop = Tmax;
     double TStep = 60 * 60; // шаг по времени в секундах
-    uint Nt = std::ceil(Tmax / TStep); // количество узлов по времени
+    double t = 0;
+    uint Nt = std::ceil(Tstop / TStep); // количество узлов по времени
 
     // Начальные данные
     double dZ = 10; // m
     double L = 500; // m
     double h = 1; // m - шаг сетки по пространству
     uint Nx = std::ceil(L / h); // количество узлов по пространству
+    std::vector<double> X(Nx, h);
     double P0 = 100; // atm
     double Pinj = 150; // atm
     double Pprod = 50; // atm
@@ -71,11 +72,13 @@ TEST(PLANEPARALLELFIKTERING, TASK3){
     Slae::Matrix::ThreeDiagonalMatrix matrix = Slae::Matrix::ThreeDiagonalMatrix::Zero(Nx); // трех диагональная матрица системы
     matrix.fill_row(0, 0, 1, 0); // фиктивный узел в начале
     matrix.fill_row(Nx-1, 0, 1, 0); // фиктивный узел в конце
-    for(int t = 0; t < Nt; ++t){
+
+    double rhoMinus;
+    double rhoPlus;
+    double c, b, a;
+
+    while(t < Tstop){
         // Расчет коэффициентов матрицы и вектора правой части
-        double rhoMinus;
-        double rhoPlus;
-        double c, b, a;
         for(int i = 1; i < Nx - 1; ++i){
             d[i] = getCoefD(phi, rho0, cf, P[i], TStep);
             rhoMinus = getRhoMinus(P[i], P[i-1], rho0, cf, P0);
@@ -85,10 +88,28 @@ TEST(PLANEPARALLELFIKTERING, TASK3){
             a = getCoefA(c, b, phi, cf, rho0, TStep);
             matrix.fill_row(i, c, a, b);
         }
+
+        P = Slae::Solvers::solveThreeDiagonal(matrix, d);
+        t = t + TStep;
     }
 
+    const std::string FILE_PATH = __FILE__;
+    const std::string DIR_PATH = FILE_PATH.substr(0, FILE_PATH.size() - 31);
 
+    std::fstream file;
+    file.open(DIR_PATH + "data_files/planeParallelFiltering.txt", std::ios::out);
 
+    for(double p : P){
+        file<< p << " "; // y
+    }
+    file<<std::endl;
+
+    for(double dx : X){
+        file<< dx << " "; // y
+    }
+    file<<std::endl;
+
+    file.close();
 
 
 }
