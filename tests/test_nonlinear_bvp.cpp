@@ -2,10 +2,10 @@
 // Created by Арсений Плахотнюк on 11.12.2022.
 //
 #include "gtest/gtest.h"
-#include "comp_math/types/BasicTypes.hpp"
-#include "comp_math/solvers/ShootingMethod.hpp"
-#include "comp_math/matrix/NonLinearBoundaryValueProblemMatrix3.hpp"
-#include "comp_math/interpolation/Linear.hpp"
+#include "compMath/types/BasicTypes.hpp"
+#include "compMath/solvers/ShootingMethod.hpp"
+#include "compMath/matrix/NonLinearBoundaryValueProblemMatrix3.hpp"
+#include "compMath/interpolation/Linear.hpp"
 #include <iostream>
 #include <fstream>
 

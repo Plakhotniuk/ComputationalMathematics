@@ -2,9 +2,9 @@
 // Created by Арсений Плахотнюк on 11.12.2022.
 //
 #include "gtest/gtest.h"
-#include "comp_math/integrators/DormandPrince.hpp"
-#include "comp_math/integrators/RungeKutta4.hpp"
-#include "comp_math/types/BasicTypes.hpp"
+#include "compMath/integrators/DormandPrince.hpp"
+#include "compMath/integrators/RungeKutta4.hpp"
+#include "compMath/types/BasicTypes.hpp"
 #include <iostream>
 #include <fstream>
 

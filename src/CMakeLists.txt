@@ -1,4 +1,4 @@
-set(MODULE_NAME comp_math)
+set(MODULE_NAME compMath)
 
 message("comp_math_build " ${MODULE_NAME})
 

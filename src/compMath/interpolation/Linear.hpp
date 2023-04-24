@@ -5,8 +5,8 @@
 #ifndef HOMETASK2_LINEAR_HPP
 #define HOMETASK2_LINEAR_HPP
 #include <vector>
-#include "comp_math/matrix/ThreeDiagonalMatrix.hpp"
-#include "comp_math/Exceptions/SlaeBaseException.hpp"
+#include "compMath/matrix/ThreeDiagonalMatrix.hpp"
+#include "compMath/Exceptions/SlaeBaseException.hpp"
 #include <sstream>
 
 double linear_interpolation(std::vector<double> x, std::vector<double> y, double point){

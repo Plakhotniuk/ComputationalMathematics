@@ -5,8 +5,8 @@
 #ifndef MY_PROJECT_THREEDIADONALSOLVER_HPP
 #define MY_PROJECT_THREEDIADONALSOLVER_HPP
 
-#include "comp_math/matrix/ThreeDiagonalMatrix.hpp"
-#include "comp_math/Exceptions/SlaeBaseException.hpp"
+#include "compMath/matrix/ThreeDiagonalMatrix.hpp"
+#include "compMath/Exceptions/SlaeBaseException.hpp"
 #include <sstream>
 #include <vector>
 
@@ -14,7 +14,7 @@ namespace Slae::Solvers
 {
     /** @brief Метод решает систему уравнений при помощи метода прогонки
 * Решает систему линейных алгебраических уравнений при помощи метода прогонки. О методе прогонки можно узнать из
-* https://mipt.ru/education/chair/computational_mathematics/study/materials/comp_math/other/Aristova_Zavyalova_Lobanov_2014.pdf
+* https://mipt.ru/education/chair/computational_mathematics/study/materials/compMath/other/Aristova_Zavyalova_Lobanov_2014.pdf
 *
 * @param matrix трехдиагональная матрица
 * @param col столбец правой части

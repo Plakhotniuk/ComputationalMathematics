@@ -4,7 +4,7 @@
 
 #ifndef COMPUTATIONALMATHEMATICS_NEWTONMETHOD_HPP
 #define COMPUTATIONALMATHEMATICS_NEWTONMETHOD_HPP
-#include "comp_math/Exceptions/SlaeBaseException.hpp"
+#include "compMath/Exceptions/SlaeBaseException.hpp"
 #include <vector>
 
 namespace Slae::Solvers{

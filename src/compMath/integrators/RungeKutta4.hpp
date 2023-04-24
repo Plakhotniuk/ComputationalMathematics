@@ -4,8 +4,9 @@
 
 #ifndef COMPUTATIONALMATHEMATICS_RUNGEKUTTA4_HPP
 #define COMPUTATIONALMATHEMATICS_RUNGEKUTTA4_HPP
-#include "comp_math/Exceptions/SlaeBaseException.hpp"
-#include "comp_math//types/BasicTypes.hpp"
+
+#include "compMath/Exceptions/SlaeBaseException.hpp"
+#include "compMath/types/BasicTypes.hpp"
 #include <vector>
 
 std::vector<double> RungeKutta4(std::function<double(double, double)>& f, const double x_0, const double x_f,

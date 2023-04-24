@@ -4,9 +4,9 @@
 
 #ifndef COMPUTATIONALMATHEMATICS_SHOOTINGMETHOD_HPP
 #define COMPUTATIONALMATHEMATICS_SHOOTINGMETHOD_HPP
-#include "comp_math/Exceptions/SlaeBaseException.hpp"
-#include "comp_math/solvers/NewtonMethod.hpp"
-#include "comp_math/integrators/RungeKutta4.hpp"
+#include "compMath/Exceptions/SlaeBaseException.hpp"
+#include "compMath/solvers/NewtonMethod.hpp"
+#include "compMath/integrators/RungeKutta4.hpp"
 #include <vector>
 
 namespace Slae::Solvers{

@@ -7,11 +7,11 @@
 #include "comp_math/utility/Overloads.hpp"
 #include "comp_math/sparse/CSR.hpp"
 #include <sstream>
-#include "comp_math/Exceptions/SlaeBaseException.hpp"
+#include "compMath/Exceptions/SlaeBaseException.hpp"
 #include <functional>
 #include "ThreeDiagonalMatrix.hpp"
 #include "cmath"
-#include "comp_math/solvers/ThreeDiadonalSolver.hpp"
+#include "compMath/solvers/ThreeDiadonalSolver.hpp"
 #include "ostream"
 
 enum COLUMNINDEX {

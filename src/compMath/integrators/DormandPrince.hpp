@@ -6,7 +6,7 @@
 #define COMPUTATIONALMATHEMATICS_DORMANDPRINCE_HPP
 #include <vector>
 #include <cmath>
-#include "comp_math//types/BasicTypes.hpp"
+#include "compMath/types/BasicTypes.hpp"
 
 std::pair<std::vector<double>, std::vector<VectorXd>> DormandPrince(std::function<VectorXd(double, const VectorXd&)>& f,
                                                                   const double x_0, const double x_f, const VectorXd& y_0,

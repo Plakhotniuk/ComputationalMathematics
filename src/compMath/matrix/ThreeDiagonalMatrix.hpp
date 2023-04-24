@@ -4,7 +4,7 @@
 
 #ifndef MY_PROJECT_THREEDIAGONALMATRIX_HPP
 #define MY_PROJECT_THREEDIAGONALMATRIX_HPP
-#include "comp_math/Exceptions/SlaeBaseException.hpp"
+#include "compMath/Exceptions/SlaeBaseException.hpp"
 #include <vector>
 #include <array>
 #include <sstream>
@@ -17,12 +17,14 @@ namespace Slae::Matrix{
         std::vector<std::array<double, 3>> data_;
 
     public:
+
         /** @brief ThreeDiagonalMatrix class constructor
          * Creates three-diagonal matrix with size 'size'
          *
          * @param size -- matrix size
         */
         explicit ThreeDiagonalMatrix(unsigned int size);
+
         /** @brief ThreeDiagonalMatrix class static constructor
          * Creates three-diagonal zero matrix with size 'size'
          *
@@ -39,19 +41,18 @@ namespace Slae::Matrix{
 
         /** @brief ThreeDiagonalMatrix class static constructor
          * Creates three-diagonal matrix with size 'size' and filled with three numbers
-         *
-         * @param a -- number of lower diagonal
-         * @param b -- number of main diagonal
-         * @param c -- number of upper diagonal
          * @param size -- matrix size
+         * @param a -- value on lower diagonal
+         * @param b -- value on main diagonal
+         * @param c -- value on upper diagonal
         */
         static ThreeDiagonalMatrix ThreeNumbers(unsigned int size, double a, double b, double c);
-        /** @brief ThreeDiagonalMatrix class static constructor
-         * Creates three-diagonal matrix with size 'size' and filled with three numbers
+
+        /** @brief ThreeDiagonalMatrix class method
          *
          * @param i -- index of row
          * @param j -- index of column
-         * @param size -- matrix size
+         * @return matrix element with i,j indexes
         */
         double & operator()(int i, int j);
 
@@ -62,6 +63,7 @@ namespace Slae::Matrix{
         * @return matrix element with i,j indexes
         */
         [[nodiscard]] const double & operator()(int i, int j) const;
+
         /** @brief ThreeDiagonalMatrix class method
          * @return matrix row-size
         */
@@ -69,9 +71,9 @@ namespace Slae::Matrix{
         /**
          * @brief ThreeDiagonalMatrix class method
          * @param ind -- index of row
-         * @param  a -- number of lower diagonal
-         * @param b -- number of main diagonal
-         * @param c -- number of upper diagonal
+         * @param  a -- value on lower diagonal
+         * @param b -- value on main diagonal
+         * @param c -- value on upper diagonal
          */
         void fill_row(unsigned ind, double a, double b, double c);
 
