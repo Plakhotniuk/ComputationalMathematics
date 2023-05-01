@@ -5,6 +5,8 @@
 #include "gtest/gtest.h"
 #include "compMath/solvers/ThreeDiadonalSolver.hpp"
 #include "compMath/types/BasicTypes.hpp"
+#include "compMath/utility/Norm.hpp"
+#include "compMath/utility/Overloads.hpp"
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -32,7 +34,7 @@ double rightBoundCondY(double x, double t, double lambda_ = 1.e-4){
     return 0;
 }
 
-double analyticalSolution(double x, double y, double t, double lambda_){
+double analyticalSolution(double x, double y, double t, double lambda_ = 1.e-4){
     return std::cos(M_PI * x) * std::sin(5 * M_PI * y) * std::exp(-50*M_PI*M_PI*lambda_*t);
 }
 
@@ -77,7 +79,7 @@ TEST(THERMAL, CONDUCTIVITY){
     const double tStep = 0.001;
     double t = tStart;
 
-    const uint NX = 10;
+    const uint NX = 50;
     const uint NY = NX;
     VectorXd x = getLinspace(xLeftBound, xRightBound, NX);
     double hx = (xRightBound - xLeftBound) / NX;
@@ -118,15 +120,26 @@ TEST(THERMAL, CONDUCTIVITY){
             d[d.size() - 1] = solution[j][NX - 1];
             for(int i = 1; i < NX - 1; ++i){
                 d[i] = solution[j][i];
-                dTilda[i] = d[i] - g[i] * solution[j][i-1] - f[i] * solution[j][i+1];
+                dTilda[i] = d[i] - g[i] * solution[j-1][i] - f[i] * solution[j+1][i];
                 matrix.fill_row(i, c[i], a[i], b[i]);
             }
-            solution[j] = Slae::Solvers::solveThreeDiagonal(matrix, d);
-
+            solution[j] = Slae::Solvers::solveThreeDiagonal(matrix, dTilda);
         }
-
         t += tStep;
     }
 
+    std::vector<std::vector<double>> anSol(NY, std::vector<double>(NX));
+    for(int j = 0; j < NY; ++j){
+        for(int i = 0; i < NX; ++i){
+            anSol[i][j] = analyticalSolution(x(i), y(j), t);
+        }
+    }
+
+    std::vector<double> diff(NY);
+    for(int i = 0; i < NY; ++i){
+        diff[i] = Norm<double, NormType::SecondNorm>::get_norm(anSol[i] - solution[i]);
+    }
+
+    std::cout << diff << std::endl;
 
 }
