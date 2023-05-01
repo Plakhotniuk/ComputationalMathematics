@@ -9,6 +9,7 @@
 
 double getRho(double rho0, double cf, double p){
     double p0 = 120; // atm - опорное давление
+    rho0 = 1000;
     return rho0 * (1. + cf * (p - p0));
 }
 
@@ -49,9 +50,9 @@ TEST(PLANEPARALLELFIKTERING, TASK3){
     // Начальные данные
     double dZ = 10; // m
     double L = 500; // m
-    double h = 0.1; // m - шаг сетки по пространству
+    double h = 0.5; // m - шаг сетки по пространству
     uint Nx = std::ceil(L / h); // количество узлов по пространству
-    std::vector<double> X(Nx, h);
+
     double P0 = 100; // atm
     double Pinj = 150; // atm
     double Pprod = 50; // atm

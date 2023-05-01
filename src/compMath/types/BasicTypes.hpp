@@ -12,6 +12,7 @@ using integer = std::int32_t;
 using Vector2d = Eigen::Vector2d;
 using Vector3d = Eigen::Vector3d;
 using VectorXd = Eigen::VectorXd;
+using MatrixXd = Eigen::MatrixXd;
 using Quaternion = Eigen::Quaterniond;
 
 #endif //BALLISTICS_PLAKHOTNIUK_ARSENIY_BASICTYPES_H
