@@ -72,8 +72,8 @@ TEST(PLANEPARALLELFIKTERING, TASK3){
 
 
     Slae::Matrix::ThreeDiagonalMatrix matrix = Slae::Matrix::ThreeDiagonalMatrix::Zero(Nx); // трех диагональная матрица системы
-    matrix.fill_row(0, 0, 1, 0); // фиктивный узел в начале
-    matrix.fill_row(Nx-1, 0, 1, 0); // фиктивный узел в конце
+    matrix.fill_row(0, 0, 1, 0);
+    matrix.fill_row(Nx-1, 0, 1, 0);
 
     double rhoMinus;
     double rhoPlus;

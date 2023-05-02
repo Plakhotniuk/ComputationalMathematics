@@ -38,11 +38,11 @@ double analyticalSolution(double x, double y, double t, double lambda_ = 1.e-4){
     return std::cos(M_PI * x) * std::sin(5 * M_PI * y) * std::exp(-50*M_PI*M_PI*lambda_*t);
 }
 
-VectorXd getLinspace(double leftBound, double rightBound, uint N){
-    VectorXd result = VectorXd::Zero(N);
+std::vector<double> getLinspace(double leftBound, double rightBound, uint N){
+    std::vector<double> result(N, 0.);
     double h = (rightBound - leftBound) / N;
     for(int i = 0; i < N; ++i){
-        result(i) = i*h;
+        result[i] = i*h;
     }
     return result;
 }
@@ -81,9 +81,9 @@ TEST(THERMAL, CONDUCTIVITY){
 
     const uint NX = 50;
     const uint NY = NX;
-    VectorXd x = getLinspace(xLeftBound, xRightBound, NX);
+    std::vector<double> x = getLinspace(xLeftBound, xRightBound, NX);
     double hx = (xRightBound - xLeftBound) / NX;
-    VectorXd y = getLinspace(yLeftBound, yRightBound, NY);
+    std::vector<double> y = getLinspace(yLeftBound, yRightBound, NY);
     double hy = (yRightBound - yLeftBound) / NY;
 
 
@@ -91,47 +91,77 @@ TEST(THERMAL, CONDUCTIVITY){
     const double lambda_ = 1.e-4;
 
 
-    Slae::Matrix::ThreeDiagonalMatrix matrix = Slae::Matrix::ThreeDiagonalMatrix::Zero(NX);
-    matrix.fill_row(0, 0, 1, 0);
-    matrix.fill_row(NX - 1, 0, 1, 0);
+    Slae::Matrix::ThreeDiagonalMatrix matrix = Slae::Matrix::ThreeDiagonalMatrix::Zero(NY);
 
     std::vector<double> a(NX, coefA(tStep, hx, hy));
     std::vector<double> b(NX, coefB(tStep, hx));
     std::vector<double> c(NX, coefC(tStep, hx));
-    std::vector<double> d(NX, 0.);
+    std::vector<double> d(NX, 0.); // нулевые начальные условия
     std::vector<double> f(NX, coefF(tStep, hy));
     std::vector<double> g(NX, coefG(tStep, hy));
 
-    std::vector<double> dTilda(NX, 0.); // нулевые начальные условия
+    std::vector<double> dTilda(NX, 0.);
 
     // Генерация сетки и начальные условия
     std::vector<std::vector<double>> solution(NY, std::vector<double>(NX));
-
     for(int j = 0; j < NY; ++j){
         for(int i = 0; i < NX; ++i){
-            solution[j][i] = initCondition(x(i), y(j));
+            solution[j][i] = initCondition(x[i], y[j]);
         }
     }
 
-
+    int inv = 1;
     while(t < tEnd){
-        for(int j = 1; j < NY - 1; ++j){
-            d[0] = solution[j][0];
-            d[d.size() - 1] = solution[j][NX - 1];
-            for(int i = 1; i < NX - 1; ++i){
-                d[i] = solution[j][i];
-                dTilda[i] = d[i] - g[i] * solution[j-1][i] - f[i] * solution[j+1][i];
-                matrix.fill_row(i, c[i], a[i], b[i]);
+
+        // Граничные условия
+        for(int i = 0; i < NX; ++i){
+            solution[0][i] = leftBoundCondY(x[i], t);
+            solution[NY-1][i] = rightBoundCondY(x[i], t);
+            solution[i][0] = leftBoundCondX(y[i], t);
+            solution[i][NX-1] = rightBoundCondX(y[i], t);
+        }
+
+        if(inv % 2 == 1){
+            for(int j = 1; j < NY - 1; ++j){
+
+                d[0] = leftBoundCondY(x[j], t);
+                dTilda[0] = d[0];
+                matrix.fill_row(0, 0, 1, 0);
+                for(int i = 1; i < NX - 1; ++i){
+                    d[i] = solution[j][i];
+                    dTilda[i] = d[i] - g[i] * solution[j-1][i] - f[i] * solution[j+1][i];
+                    matrix.fill_row(i, c[i], a[i], b[i]);
+                }
+                d[NY - 1] = rightBoundCondY(x[j], t);
+                dTilda[NY - 1] = d[NY - 1];
+                matrix.fill_row(NY - 1, 0, 1, 0);
+                solution[j] = Slae::Solvers::solveThreeDiagonal(matrix, dTilda);
             }
-            solution[j] = Slae::Solvers::solveThreeDiagonal(matrix, dTilda);
+        }
+        else{
+            for(int j = 1; j < NY - 1; ++j){
+                d[0] = leftBoundCondX(y[j], t);
+                dTilda[0] = d[0];
+                matrix.fill_row(0, 0, 1, 0);
+                for(int i = 1; i < NX - 1; ++i){
+                    d[i] = solution[i][j];
+                    dTilda[i] = d[i] - c[i] * solution[j-1][i] - b[i] * solution[i][j+1];
+                    matrix.fill_row(i, g[i], a[i], f[i]);
+                }
+                d[NX - 1] = rightBoundCondX(y[j], t);
+                dTilda[NY - 1] = d[NY - 1];
+                matrix.fill_row(NY - 1, 0, 1, 0);
+                solution[j] = Slae::Solvers::solveThreeDiagonal(matrix, dTilda);
+            }
         }
         t += tStep;
+        ++inv;
     }
 
     std::vector<std::vector<double>> anSol(NY, std::vector<double>(NX));
     for(int j = 0; j < NY; ++j){
         for(int i = 0; i < NX; ++i){
-            anSol[i][j] = analyticalSolution(x(i), y(j), t);
+            anSol[j][i] = analyticalSolution(x[i], y[j], t);
         }
     }
 
