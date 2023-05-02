@@ -40,15 +40,15 @@ double analyticalSolution(double x, double y, double t, double lambda_ = 1.e-4){
 
 std::vector<double> getLinspace(double leftBound, double rightBound, uint N){
     std::vector<double> result(N, 0.);
-    double h = (rightBound - leftBound) / N;
+    double h = (rightBound - leftBound) / (N-1);
     for(int i = 0; i < N; ++i){
-        result[i] = i*h;
+        result[i] = leftBound + i*h;
     }
     return result;
 }
 
 double coefA(double tau, double hx, double hy, double lambda_ = 1.e-4){
-    return 1. - 2. * tau * lambda_ * (25. / (hx*hx) + 1. / (hy*hy));
+    return 1. + 2. * tau * lambda_ * (25. / (hx*hx) + 1. / (hy*hy));
 }
 
 double coefB(double tau, double hx, double lambda_ = 1.e-4){
@@ -79,12 +79,12 @@ TEST(THERMAL, CONDUCTIVITY){
     const double tStep = 0.001;
     double t = tStart;
 
-    const uint NX = 50;
+    const uint NX = 150;
     const uint NY = NX;
     std::vector<double> x = getLinspace(xLeftBound, xRightBound, NX);
-    double hx = (xRightBound - xLeftBound) / NX;
+    double hx = (xRightBound - xLeftBound) / (NX-1);
     std::vector<double> y = getLinspace(yLeftBound, yRightBound, NY);
-    double hy = (yRightBound - yLeftBound) / NY;
+    double hy = (yRightBound - yLeftBound) / (NY-1);
 
 
 
@@ -123,7 +123,6 @@ TEST(THERMAL, CONDUCTIVITY){
 
         if(inv % 2 == 1){
             for(int j = 1; j < NY - 1; ++j){
-
                 d[0] = leftBoundCondY(x[j], t);
                 dTilda[0] = d[0];
                 matrix.fill_row(0, 0, 1, 0);
@@ -167,9 +166,9 @@ TEST(THERMAL, CONDUCTIVITY){
 
     std::vector<double> diff(NY);
     for(int i = 0; i < NY; ++i){
-        diff[i] = Norm<double, NormType::SecondNorm>::get_norm(anSol[i] - solution[i]);
+        diff[i] = Norm<double, NormType::FirstNorm>::get_norm(anSol[i] - solution[i]);
     }
 
-    std::cout << diff << std::endl;
+    std::cout << Norm<double, NormType::FirstNorm>::get_norm(diff) << std::endl;
 
 }
