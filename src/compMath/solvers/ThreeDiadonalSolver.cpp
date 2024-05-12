@@ -16,7 +16,7 @@ namespace Slae::Solvers
             throw SlaeBaseExceptionCpp(buff.str());
         }
 
-        matrix.check_diagonal_domimance();
+//        matrix.check_diagonal_domimance();
 
         int n = col.size();
 

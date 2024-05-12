@@ -9,19 +9,19 @@ L = 10 # m, x=[-L, L]
 # left side
 v_left = 0 # m/s
 rho_left = 13 # kg/m3
-p_left = 10 # atm
+p_left = 10**6 # atm
 
 # right side
 v_right = 0 # m/s
 rho_right = 1.3 # kg/m3
-p_right = 1 # atm
+p_right = 10**5 # atm
 
 # v = (rho, u, e)  w = (rho, rho*u, rho*e)
 init_conds = [rho_left, v_left, p_left/((gamma-1)*rho_left), rho_right, v_right, p_right/((gamma-1)*rho_right)]
 
-time_end = 2
+time_end = 0.015
 cfl_max = 0.01
-tau = 1e-3
+tau = 1.e-7
 h = 0.2
 
 x_limits = [-L, L]
@@ -103,7 +103,7 @@ print(sol.shape)
 nx = math.floor((x_limits[1] - x_limits[0])/h)
 x_arr = np.array([x_limits[0] + i * h for i in range(nx + 1)])
 
-plt.scatter(x_arr, sol[:, 2000, 3], label=r'Численное решение')
+plt.scatter(x_arr, sol[:, 100, 3], label=r'Численное решение')
 plt.legend()
 plt.title('Задача Римана о распаде произвольного разрыва')
 plt.grid()

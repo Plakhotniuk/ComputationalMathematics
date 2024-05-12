@@ -43,7 +43,7 @@ double getCoefD(double phi, double rho0, double cf, double p, double tau){
 TEST(PLANEPARALLELFIKTERING, TASK3){
     double Tmax = 10 * 24 * 60 * 60; // время расчета в секундах
     double Tstop = Tmax;
-    double TStep = 60; // шаг по времени в секундах
+    double TStep = 60*60; // шаг по времени в секундах
     double t = 0;
     uint Nt = std::ceil(Tstop / TStep); // количество узлов по времени
 
@@ -59,7 +59,7 @@ TEST(PLANEPARALLELFIKTERING, TASK3){
     double phi = 0.2; // пористость пласта
     double rho0 = 1000; // kg/m^3
     double cf = 1.e-4; // atm^(-1)
-    double mu = 1.e-3; // Pa * s
+    double mu = 1.e-3*9.87*1.e-6; // Pa * s
     double k = 1.e-14; // m^2
 
 

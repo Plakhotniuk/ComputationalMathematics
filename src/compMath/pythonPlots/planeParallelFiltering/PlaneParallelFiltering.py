@@ -10,5 +10,5 @@ plt.title('Плоскопараллельная однофазная фильт�
 plt.grid()
 plt.xlabel('x')
 plt.ylabel('y(x)')
-plt.savefig('data/planeParallelFiltering.png')
+plt.savefig('planeParallelFiltering.png')
 plt.show()
